@@ -45,3 +45,24 @@ if st.button("Predict"):
     inr_price = pred * 83  # Approx. USD to INR
 
     st.success(f"💰 Predicted House Price: ${pred:,.2f} (₹{inr_price:,.2f})")
+
+# Optional: Choose feature to visualize
+st.subheader("📊 Price vs Feature Graph")
+selected_feature = st.selectbox("Choose a feature to plot against Sale Price:", features_to_use)
+
+# Scatter plot
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+ax.scatter(df[selected_feature], df['SalePrice'], alpha=0.5, label='Actual Data')
+
+# Plot predicted point
+predicted_x = input_df[selected_feature].values[0]
+ax.scatter(predicted_x, pred, color='red', s=100, label='Your Prediction')
+
+ax.set_xlabel(selected_feature)
+ax.set_ylabel('Sale Price')
+ax.set_title(f"Sale Price vs {selected_feature}")
+ax.legend()
+
+st.pyplot(fig)
+
